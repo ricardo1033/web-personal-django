@@ -1,0 +1,44 @@
+# Definimos el directorio del proyecto al python path.
+WSGIPythonPath /opt/mi_proyecto
+ 
+#Puerto por el que escuchará el apache.
+listen 8000
+ 
+# Creamos el  virtualhost.
+<virtualhost :8000="">
+    ServerAdmin webmaster@localhost
+ 
+    # Alias de la dirección del archivo donde está la aplicación wsgi 
+    WSGIScriptAlias / /opt/mi_proyecto/aplicación_principal/wsgi.py
+ 
+    # Alias de los directorios estáticos y de multimedia.
+    Alias /static/ /opt/mi_proyecto/static/
+    Alias /media/ /opt/mi_proyecto/media/
+ 
+    # Establecemos los permisos para el wsgi.py.
+    <directory mi_proyecto="" n_principal="" opt="">
+        <files wsgi.py="">
+            Order deny,allow # Si usan Apache 2.4 comentar
+            Allow from all # Si usan Apache 2.4 comenten
+           #Required all granted # Si usan Apache 2.4 descomentar
+        </files>
+    </directory>
+ 
+    # Establecemos los permisos para directorio static
+    <directory mi_proyecto="" opt="" static="">
+        Order deny,allow # Si usan Apache 2.4 comentar
+        Allow from all # Si usan Apache 2.4 comenten
+        #Required all granted # Si usan Apache 2.4 descomentar
+    </directory>
+ 
+    # Establecemos los permisos para directorio media
+    <directory media="" mi_proyecto="" opt="">
+        Order deny,allow # Si usan Apache 2.4 comentar
+        Allow from all # Si usan Apache 2.4 comenten
+        #Required all granted # Si usan Apache 2.4 descomentar
+    </directory>
+ 
+    # Configuracion para los Log
+    ErrorLog ${APACHE_LOG_DIR}/pyerror.log
+    CustomLog ${APACHE_LOG_DIR}/pyaccess.log combined
+</virtualhost>
